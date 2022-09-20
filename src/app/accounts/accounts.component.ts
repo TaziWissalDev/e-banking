@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {AccountsService} from "../services/accounts.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {AccountDetails} from "../model/account.model";
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-accounts',
@@ -17,7 +18,7 @@ export class AccountsComponent implements OnInit {
   operationFromGroup! : FormGroup;
   errorMessage! :string ;
 
-  constructor(private fb : FormBuilder, private accountService : AccountsService) { }
+  constructor(private fb : FormBuilder, private accountService : AccountsService,private sharedService:SharedService) { }
 
   ngOnInit(): void {
     this.accountFormGroup=this.fb.group({
@@ -28,7 +29,14 @@ export class AccountsComponent implements OnInit {
       amount : this.fb.control(0),
       description : this.fb.control(null),
       accountDestination : this.fb.control(null)
-    })}
+    })
+  
+    this.sharedService.data.subscribe((res:any)=>{
+      console.log("reciever==>",res);
+       this.accountFormGroup.controls['accountId'].setValue(res?.id)
+      this.handleSearchAccount()
+    })
+  }
 
   handleSearchAccount() {
     let accountId : string =this.accountFormGroup.value.accountId;

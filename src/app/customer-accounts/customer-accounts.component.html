@@ -1,4 +1,98 @@
-<div class="container">
-  <div>{{customerId}}</div>
-  <div>{{customer | json}}</div>
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12 image-section">
+    <img class="bg-image" src="assets/images/bg-profile.png">
+  </div>
+  <div class="row user-left-part">
+    <div class="col-md-3 col-sm-3 col-xs-12 user-profil-part pull-left p-3 vh-100">
+      <div class="row text-center">
+        <div class="user-image ">
+          <img src="https://www.jamf.com/jamf-nation/img/default-avatars/generic-user-purple.png"
+            class="rounded-circle">
+        </div>
+        <div class=" profile-header-section1 pull-left">
+          <h1>{{customer.name}}</h1>
+          <h5>{{customer.email}}</h5>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12 pull-right profile-right-section">
+      <div class="row profile-right-section-row">
+
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-8">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#" role="tab" data-toggle="tab"><i class="fas fa-user-circle"></i>
+                    Accounts</a>
+                </li>
+
+              </ul>
+            </div>
+            <div class="row">
+              <ng-container>
+                <div class="col-12 table-responsive py-4">
+                  <table class="table w-100">
+                    <thead class="thead-light position-sticky">
+                      <tr>
+
+                        <th scope="col"><span translate>N° de compte</span></th>
+                        <th scope="col"><span translate>Balance</span></th>
+                        <th scope="col"><span translate>Status</span></th>
+                        <th scope="col"><span translate>Date de création</span></th>
+                        <th scope="col"><span translate>interestRate</span></th>
+                        <th scope="col"><span translate>overDraft</span></th>
+                        <th scope="col">
+                          <!-- <span translate>{{column.column}}</span> -->
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let account of accounts">
+
+                        <td>{{ account.id }}</td>
+                        <td>{{ account.balance }}</td>
+                        <td>{{ account.status }}</td>
+
+
+                        <td>{{ account.created_at | date: "dd.MM.yyyy" }}</td>
+                        <td>{{ account?.interestRate }}</td>
+                        <td>{{ account?.overDraft }}</td>
+                        <td>
+                          <!-- <span ngbTooltip="{{item.hint}}" placement="left">{{ item.value  }}</span> -->
+                        </td>
+                        <td class="d-flex justify-content-end">
+                          <div class="dropdown">
+                            <button class="btn btn-success " (click)="showAccountOperations(account)" type="button">
+                              Operations
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="actionMenuButton">
+
+                              <a class="dropdown-item cursor-pointer" (click)="deleteAccount(account?.id)">
+                                <i class="fas fa-user-slash"></i>
+                                {{'Supprimer' }}
+                              </a>
+
+                              <a class="dropdown-item cursor-pointer" (click)="showAccountOperations(account)">
+                                <i class="fas fa-address-card"></i>
+                                {{'Operations' }}
+                              </a>
+
+                            </div>
+                          </div>
+
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
